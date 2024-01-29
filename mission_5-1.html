@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>mission5-1</title>
+</head>
+<body>
+
+	
+	<style>
+		button {
+			width: 60px;
+			height: 60px;
+			font-size: 3.0em;
+			background-color:white;
+			vertical-align: top;}
+			.class1{
+				background-color: rgb(255, 213, 0);}
+			#display {width: 183px;height: 50px;font-size: 2.0em;background-color:white; border: 2px solid black;  
+				
+        
+              }
+		
+	
+	
+
+	</style>
+	<input type="text" id="display" disabled>  
+	
+	<button onclick="clearDisplay()">C</button> <br>
+	<button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')" >8</button>
+	<button onclick="appendNumber('9')" >9</button>
+	<button onclick="appendOperator('/')" class="class1">/</button> <br>
+	<button onclick="appendNumber('4')">4</button>
+	<button onclick="appendNumber('5')">5</button>
+	<button onclick="appendNumber('6')">6</button>
+	<button onclick= "appendOperator('*')" class="class1">*</button> <br>
+	<button onclick="appendNumber('1')">1</button>
+	<button onclick="appendNumber('2')">2</button>
+	<button onclick="appendNumber('3')">3</button>
+	<button onclick="appendOperator('-')" class="class1">-</button> <br>
+	<button onclick="appendNumber('0')">0</button>
+	<button onclick="appendOperator('.')">.</button>
+	<button onclick="calculateResult()">=</button>
+	<button onclick="appendOperator('+')" class="class1">+</button>
+	<script src="mission_5-1.js"></script> 
+	<script>
+		var displayElement = document.getElementById('display');
+		var currentExpression = '';
+			function appendNumber(number) {
+			 currentExpression += number;
+			 display.value = currentExpression;
+			   
+			}
+			function appendOperator(operator){
+    if (operator === '/' && currentExpression.slice(-1) === '0') {
+    
+        displayElement.value = 'Error: Division by zero';
+    } else {
+        currentExpression += operator;
+        displayElement.value = currentExpression;
+    }
+}
+			function clearDisplay() {
+				currentExpression = '';
+			displayElement.value = ''; 
+			}
+			function calculateResult() {
+			try {
+				var operator = currentExpression[currentExpression.length - 1];
+				var result = eval(currentExpression);
+				if (operator === '/' && currentExpression .slice(-1) === '0') {
+            throw new Error("error");
+        }	
+				if (isNaN(result) || !isFinite(result)) {
+            throw new Error("Division by zero error");
+        }
+		
+        if (result === Infinity || result === -Infinity) {
+            throw new Error("Invalid result");}
+			displayElement.classList.remove('error-message');	
+			displayElement.value = result;
+				currentExpression = ''; 
+			}catch (error) {
+        if (error.message === "Invalid result") {
+            displayElement.value = 'Error: Invalid result';
+        } else if (error.message === "Division by zero error") {
+            displayElement.value = 'Error:Division by zero';}
+			else{displayElement.value = 'Error';
+
+			}
+    }
+}
+		
+        
+		
+        
+    
+
+	
+		
+
+		</script>
+</body>
+
+</html>
